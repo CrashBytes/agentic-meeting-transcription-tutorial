@@ -1,4 +1,4 @@
-# Quick Setup Guide
+# Quick Start Guide
 
 Get the Agentic Meeting Transcription System running in under 10 minutes.
 
@@ -6,9 +6,9 @@ Get the Agentic Meeting Transcription System running in under 10 minutes.
 
 - Docker and Docker Compose installed
 - OpenAI API key
-- Hugging Face token (for speaker diarization)
+- Hugging Face account and token
 
-## Quick Start
+## 5-Minute Setup
 
 ### 1. Clone the Repository
 
@@ -20,38 +20,31 @@ cd agentic-meeting-transcription-tutorial
 ### 2. Configure Environment
 
 ```bash
-# Copy environment template
 cp .env.example .env
-
-# Edit .env and add your API keys
-nano .env  # or use your preferred editor
 ```
 
-Required environment variables:
-- `OPENAI_API_KEY`: Your OpenAI API key from https://platform.openai.com/api-keys
-- `HUGGINGFACE_TOKEN`: Your Hugging Face token from https://huggingface.co/settings/tokens
+Edit `.env` and add your API keys:
+```bash
+OPENAI_API_KEY=sk-your-key-here
+HUGGINGFACE_TOKEN=hf_your-token-here
+```
 
 ### 3. Start All Services
 
 ```bash
-# Start with Docker Compose
 docker-compose up -d
-
-# Wait for services to be ready (about 30 seconds)
-sleep 30
-
-# Check all services are running
-docker-compose ps
 ```
 
-### 4. Verify Installation
+This starts:
+- Backend API (port 8000)
+- Qdrant vector database (port 6333)
+- PostgreSQL (port 5432)
+- Redis cache (port 6379)
+
+### 4. Verify Services
 
 ```bash
-# Check backend health
 curl http://localhost:8000/health
-
-# Access API documentation
-open http://localhost:8000/docs
 ```
 
 Expected response:
@@ -59,88 +52,97 @@ Expected response:
 {
   "status": "healthy",
   "agents": {
-    "transcription": true,
-    "diarization": true
+    "transcription": "ready",
+    "diarization": "ready",
+    "summarization": "ready",
+    "action_items": "ready"
   }
 }
 ```
 
-### 5. Test the System
+### 5. Process Your First Meeting
 
 ```bash
-# Upload a test audio file (WAV format)
-curl -X POST http://localhost:8000/api/meetings \
+curl -X POST http://localhost:8000/api/meetings/process \
   -H "Content-Type: application/json" \
-  -d '{"title": "Test Meeting", "participants": ["Alice", "Bob"]}'
-
-# Save the meeting ID from the response
-# Then upload audio
-curl -X POST http://localhost:8000/api/meetings/{meeting_id}/upload-audio \
-  -F "audio=@path/to/your/audio.wav"
+  -d '{
+    "audio_url": "path/to/your/meeting.mp3",
+    "title": "Product Strategy Meeting",
+    "participants": ["alice@example.com", "bob@example.com"]
+  }'
 ```
 
-## Service URLs
+## What Happens Next
 
-- **Backend API**: http://localhost:8000
-- **API Documentation**: http://localhost:8000/docs
-- **Qdrant Dashboard**: http://localhost:6333/dashboard
-- **PostgreSQL**: localhost:5432
-- **Redis**: localhost:6379
+The system will:
+1. ✅ Transcribe the audio using Whisper
+2. ✅ Identify speakers using Pyannote
+3. ✅ Retrieve relevant context from past meetings
+4. ✅ Generate summaries (brief, medium, detailed)
+5. ✅ Extract action items with assignees
+6. ✅ Store in vector database for future context
 
-## Next Steps
+Processing time: ~2-5 minutes for a 30-minute meeting
 
-1. **Read the Full Documentation**: See [README.md](README.md) for detailed features
-2. **Try Different Audio Files**: Test with various meeting recordings
-3. **Explore the API**: Use the interactive API docs at `/docs`
-4. **Review Analysis**: Check summaries and action items
-5. **Deploy to Production**: See [Kubernetes Guide](#kubernetes-deployment)
+## API Endpoints
+
+### Process Meeting
+```bash
+POST /api/meetings/process
+```
+
+### Real-time Transcription
+```javascript
+const ws = new WebSocket('ws://localhost:8000/ws/transcribe');
+ws.send(audioData);  // Send audio as binary
+```
+
+### Search Meetings
+```bash
+GET /api/meetings/search?query=product+roadmap&limit=5
+```
+
+## Viewing Results
+
+The API returns:
+- **Transcript**: Full transcript with speaker labels
+- **Summaries**: Brief, medium, and detailed summaries
+- **Action Items**: Structured list with assignees and priorities
+- **Speaker Count**: Number of participants detected
 
 ## Common Issues
 
-### Port Already in Use
+**Port already in use:**
 ```bash
-# Check what's using the port
-lsof -i :8000
-
-# Stop conflicting services or change ports in docker-compose.yml
+# Change ports in docker-compose.yml
+ports:
+  - "8001:8000"  # Use 8001 instead of 8000
 ```
 
-### API Key Not Working
-- Verify key format in .env file
-- Ensure no extra spaces or quotes
-- Check OpenAI/HuggingFace account status
-
-### Services Not Starting
+**Out of memory:**
 ```bash
-# View logs
-docker-compose logs backend
-docker-compose logs postgres
-
-# Restart services
-docker-compose restart
+# Reduce Whisper model size in .env
+WHISPER_MODEL_SIZE=tiny  # or base (default), small, medium
 ```
 
-### Memory Issues
-- Whisper models require 2-4GB RAM
-- Increase Docker memory limit in Docker Desktop settings
-- Consider using 'tiny' or 'base' Whisper model
+**Slow processing:**
+- Use GPU if available: Set `WHISPER_DEVICE=cuda` in `.env`
+- Reduce audio quality before processing
+- Use smaller Whisper model
 
-## Stop Services
+## Next Steps
 
-```bash
-# Stop all services
-docker-compose down
+1. **Read the full tutorial**: [CrashBytes Tutorial](https://crashbytes.com/articles/tutorial-agentic-meeting-transcription-ai-agents-rag-enterprise-deployment-2025)
+2. **Customize agents**: Modify agents in `backend/app/agents/`
+3. **Deploy to production**: See Kubernetes manifests in `kubernetes/`
+4. **Build frontend**: Coming soon in the tutorial repository
 
-# Stop and remove volumes
-docker-compose down -v
-```
+## Getting Help
 
-## Get Help
-
-- [Full Documentation](README.md)
-- [GitHub Issues](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial/issues)
-- [Tutorial Article](https://crashbytes.com/articles/tutorial-agentic-meeting-transcription-ai-agents-rag-enterprise-deployment-2025)
+- **Issues**: [GitHub Issues](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial/discussions)
+- **Tutorial**: [Full Article](https://crashbytes.com)
 
 ---
 
-**Ready in 10 minutes** | Built by [CrashBytes](https://crashbytes.com)
+**Built by CrashBytes** | [Website](https://crashbytes.com) | [GitHub](https://github.com/CrashBytes)
