@@ -2,7 +2,7 @@
 
 A production-ready, enterprise-grade meeting transcription system powered by multiple AI agents working in concert. This system provides real-time audio transcription, speaker diarization, intelligent meeting analysis, RAG-powered context retrieval, and automated action item extraction.
 
-## 🎯 Features
+## Features
 
 - **Real-time Transcription**: WebSocket-based audio streaming with OpenAI Whisper
 - **Speaker Diarization**: Automatic speaker identification using Pyannote.audio
@@ -12,7 +12,7 @@ A production-ready, enterprise-grade meeting transcription system powered by mul
 - **Production Ready**: Docker containerization and Kubernetes deployment manifests
 - **Enterprise Scale**: Handles concurrent meetings with resource management
 
-## 📋 Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -53,7 +53,7 @@ A production-ready, enterprise-grade meeting transcription system powered by mul
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Backend Framework**: FastAPI 0.104+
 - **Agent Orchestration**: LangGraph 0.0.40+, LangChain 0.1.0+
@@ -68,7 +68,7 @@ A production-ready, enterprise-grade meeting transcription system powered by mul
 - **Frontend**: Next.js 14+ with TypeScript
 - **WebSocket**: python-socketio 5.10+
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 
@@ -121,7 +121,7 @@ cd ../backend
 alembic upgrade head
 ```
 
-## 🚀 Usage
+## Usage
 
 ### Starting the Backend
 
@@ -171,7 +171,7 @@ GET /api/meetings/{meeting_id}/summary?detail=medium
 GET /api/meetings/{meeting_id}/action-items
 ```
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 agentic-meeting-transcription-tutorial/
@@ -234,7 +234,7 @@ agentic-meeting-transcription-tutorial/
 └── README.md
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -269,7 +269,7 @@ MAX_AUDIO_DURATION=7200  # 2 hours in seconds
 CHUNK_SIZE=1024  # Audio chunk size in bytes
 ```
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Backend tests
@@ -285,7 +285,7 @@ cd backend
 pytest tests/integration/ -v
 ```
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 ### Build Images
 
@@ -310,7 +310,7 @@ Services:
 - **PostgreSQL**: localhost:5432
 - **Redis**: localhost:6379
 
-## ☸️ Kubernetes Deployment
+## Kubernetes Deployment
 
 ### Prerequisites
 
@@ -344,7 +344,7 @@ kubectl scale deployment backend --replicas=5 -n meeting-transcription
 kubectl scale deployment frontend --replicas=3 -n meeting-transcription
 ```
 
-## 📊 Monitoring
+## Monitoring
 
 ### Metrics Endpoints
 
@@ -362,7 +362,7 @@ kubectl scale deployment frontend --replicas=3 -n meeting-transcription
 - `agent_execution_duration_seconds`: Agent processing time
 - `websocket_connections_active`: Active audio streams
 
-## 🔒 Security Considerations
+## Security Considerations
 
 - **API Authentication**: Implement JWT tokens for production
 - **Rate Limiting**: Configured per-client limits
@@ -372,7 +372,7 @@ kubectl scale deployment frontend --replicas=3 -n meeting-transcription
 - **API Key Management**: Store in secrets management service
 - **CORS**: Configured for specific origins only
 
-## 🎯 Performance Optimization
+## Performance Optimization
 
 ### Backend
 
@@ -400,7 +400,7 @@ resources:
     cpu: "2000m"
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Whisper model not loading
 ```bash
@@ -423,7 +423,7 @@ huggingface-cli login
 - Check collection exists: `curl http://localhost:6333/collections`
 - Rebuild embeddings if needed
 
-## 📚 Learn More
+## Learn More
 
 - [Tutorial Article](https://crashbytes.com/articles/tutorial-agentic-meeting-transcription-ai-agents-rag-enterprise-deployment-2025)
 - [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
@@ -431,7 +431,7 @@ huggingface-cli login
 - [Pyannote.audio](https://github.com/pyannote/pyannote-audio)
 - [Qdrant Documentation](https://qdrant.tech/documentation/)
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -441,18 +441,18 @@ Contributions are welcome! Please follow these steps:
 4. Push to branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - OpenAI for Whisper and GPT-4
 - Pyannote team for speaker diarization
 - LangChain team for agent framework
 - Qdrant team for vector database
 
-## 📞 Support
+## Support
 
 - **Issues**: [GitHub Issues](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial/discussions)
@@ -460,4 +460,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ by CrashBytes** | [Website](https://crashbytes.com) | [Twitter](https://twitter.com/crashbytes)
+**Built by CrashBytes** | [Website](https://crashbytes.com) | [Twitter](https://twitter.com/crashbytes)
