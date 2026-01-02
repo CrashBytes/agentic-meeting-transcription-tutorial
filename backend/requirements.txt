@@ -10,12 +10,13 @@ openai>=1.6.1  # Required by langchain-openai 0.0.2
 # Note: openai-whisper has compatibility issues with Python 3.14
 # Use faster-whisper as alternative or install whisper separately
 # openai-whisper==20231117
-torch==2.1.1
-torchaudio==2.1.1
+torch==2.9.1  # Updated to fix CVE-2025-3730 and other security vulnerabilities
+torchaudio==2.9.1  # Updated to match torch version
 
-# LangChain Ecosystem
+# LangChain Ecosystem - Fixed version compatibility
 langchain==0.1.0
 langchain-openai==0.0.2
+langchain-community==0.0.20  # Pinned to version compatible with langsmith<0.1.0
 langgraph==0.0.40
 langsmith>=0.0.77,<0.1.0  # Required by langchain 0.1.0, must be <0.1.0
 
@@ -26,7 +27,7 @@ langsmith>=0.0.77,<0.1.0  # Required by langchain 0.1.0, must be <0.1.0
 # pyannote.core==5.0.0
 
 # Vector Database
-qdrant-client==1.7.0
+qdrant-client==1.11.3  # Updated for Python 3.14 compatibility
 sentence-transformers==2.2.2
 
 # Database
