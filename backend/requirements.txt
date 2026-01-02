@@ -1,7 +1,7 @@
 # FastAPI and Server
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-python-multipart==0.0.6
+fastapi>=0.109.1  # Security fix for PVE-2024-64930
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.7  # Security fix, required by fastapi 0.109.1
 python-socketio==5.10.0
 websockets==12.0
 
