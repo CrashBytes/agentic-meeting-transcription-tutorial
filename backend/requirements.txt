@@ -2,7 +2,7 @@
 fastapi>=0.109.1  # Security fix for PVE-2024-64930
 uvicorn[standard]>=0.24.0
 python-multipart>=0.0.7  # Security fix, required by fastapi 0.109.1
-python-socketio==5.10.0
+python-socketio>=5.14.0  # Security fix for CVE-2025-61765
 websockets==12.0
 
 # AI/ML Core
@@ -17,7 +17,7 @@ torchaudio==2.1.1
 langchain==0.1.0
 langchain-openai==0.0.2
 langgraph==0.0.40
-langsmith>=0.0.77  # Required by langchain 0.1.0
+langsmith>=0.0.77,<0.1.0  # Required by langchain 0.1.0, must be <0.1.0
 
 # Speaker Diarization
 # Note: pyannote.audio may have compatibility issues with Python 3.14
