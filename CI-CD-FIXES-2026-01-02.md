@@ -21,13 +21,15 @@ The conflict is caused by:
 **Root Cause**: 
 - `langchain 0.1.0` requires `langsmith>=0.0.77,<0.1.0`
 - `langchain-community>=0.0.21` requires `langsmith>=0.1.0,<0.2.0`
+- `langchain-core>=0.1.46` requires `langsmith>=0.1.0,<0.2.0`
 - These constraints are mutually exclusive
 
 **Solution**:
-Pinned `langchain-community` to version `0.0.20`, which is the last version compatible with `langsmith<0.1.0`.
+Pinned `langchain-community` to version `0.0.20` and `langchain-core` to version `0.1.45`, which are the last versions compatible with `langsmith<0.1.0`.
 
 ```diff
 - langchain-community>=0.0.9  # Auto-resolved to incompatible version
++ langchain-core==0.1.45  # Pinned to version compatible with langsmith<0.1.0
 + langchain-community==0.0.20  # Pinned to version compatible with langsmith<0.1.0
 ```
 
