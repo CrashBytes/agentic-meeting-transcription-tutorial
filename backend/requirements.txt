@@ -17,7 +17,7 @@ torchaudio==2.1.1
 langchain==0.1.0
 langchain-openai==0.0.2
 langgraph==0.0.40
-langsmith==0.0.69
+langsmith>=0.0.77  # Required by langchain 0.1.0
 
 # Speaker Diarization
 # Note: pyannote.audio may have compatibility issues with Python 3.14
