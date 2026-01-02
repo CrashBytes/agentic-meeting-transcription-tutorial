@@ -17,7 +17,10 @@ Three critical CI/CD pipeline failures were resolved:
 + torch==2.9.1  # Security fix
 + torchaudio==2.9.1  # Match torch version
 - langchain-community>=0.0.9
++ langchain-core==0.1.45  # Pin for langsmith compatibility
 + langchain-community==0.0.20  # Pin for langsmith compatibility
+- qdrant-client==1.7.0
++ qdrant-client==1.11.3  # Python 3.14 compatibility
 ```
 
 ### `.github/workflows/test.yml`
