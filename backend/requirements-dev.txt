@@ -27,5 +27,5 @@ ipdb==0.13.13
 ipython==8.18.1
 
 # Performance profiling
-pytest-benchmark==4.0.0
+pytest-benchmark==5.2.3
 memory-profiler==0.61.0
