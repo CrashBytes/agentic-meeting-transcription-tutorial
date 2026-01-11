@@ -19,7 +19,7 @@ langchain-core==0.1.45  # Pinned to version compatible with langsmith<0.1.0
 langchain-openai==0.0.2
 langchain-community==0.0.20  # Pinned to version compatible with langsmith<0.1.0
 langgraph==0.0.40
-langsmith>=0.0.77,<0.1.0  # Required by langchain 0.1.0, must be <0.1.0
+langsmith>=0.0.77,<0.7.0  # Required by langchain 0.1.0, must be <0.1.0
 
 # Speaker Diarization
 # Note: pyannote.audio may have compatibility issues with Python 3.14
