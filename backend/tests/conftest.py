@@ -6,19 +6,15 @@ from unittest.mock import Mock, AsyncMock
 import os
 from pathlib import Path
 
-
-# Environment setup for tests
-@pytest.fixture(scope="session", autouse=True)
-def test_env():
-    """Set test environment variables"""
-    os.environ["OPENAI_API_KEY"] = "test-key-123"
-    os.environ["HUGGINGFACE_TOKEN"] = "test-hf-token"
-    os.environ["POSTGRES_USER"] = "test_user"
-    os.environ["POSTGRES_PASSWORD"] = "test_pass"
-    os.environ["POSTGRES_DB"] = "test_db"
-    os.environ["POSTGRES_HOST"] = "localhost"
-    os.environ["REDIS_URL"] = "redis://localhost:6379/1"
-    os.environ["QDRANT_URL"] = "http://localhost:6333"
+# Set environment variables at module import time (before any app imports)
+os.environ["OPENAI_API_KEY"] = "test-key-123"
+os.environ["HUGGINGFACE_TOKEN"] = "test-hf-token"
+os.environ["POSTGRES_USER"] = "test_user"
+os.environ["POSTGRES_PASSWORD"] = "test_pass"
+os.environ["POSTGRES_DB"] = "test_db"
+os.environ["POSTGRES_HOST"] = "localhost"
+os.environ["REDIS_URL"] = "redis://localhost:6379/1"
+os.environ["QDRANT_URL"] = "http://localhost:6333"
 
 
 @pytest.fixture
