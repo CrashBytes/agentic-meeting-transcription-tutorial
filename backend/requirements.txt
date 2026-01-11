@@ -29,7 +29,7 @@ langsmith>=0.0.77,<0.1.0  # Required by langchain 0.1.0, must be <0.1.0
 
 # Vector Database
 qdrant-client==1.11.3  # Updated for Python 3.14 compatibility
-sentence-transformers==2.2.2
+sentence-transformers==5.2.0
 
 # Database
 sqlalchemy==2.0.23
