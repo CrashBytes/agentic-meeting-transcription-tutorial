@@ -1,10 +1,11 @@
 # Agentic Meeting Transcription System
 
 [![Tests](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial/workflows/Tests/badge.svg)](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial/actions)
-[![Coverage](https://img.shields.io/badge/coverage-57%25-yellow)](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial)
+[![Coverage](https://img.shields.io/badge/coverage-96%25-brightgreen)](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial)
+[![codecov](https://codecov.io/gh/CrashBytes/agentic-meeting-transcription-tutorial/branch/main/graph/badge.svg)](https://codecov.io/gh/CrashBytes/agentic-meeting-transcription-tutorial)
 [![Business Logic Coverage](https://img.shields.io/badge/business_logic_coverage-100%25-brightgreen)](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.14-blue)](https://www.python.org)
-[![Tests](https://img.shields.io/badge/tests-121_passing-brightgreen)](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial)
+[![Tests](https://img.shields.io/badge/tests-175_passing-brightgreen)](https://github.com/CrashBytes/agentic-meeting-transcription-tutorial)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 A production-ready, enterprise-grade meeting transcription system powered by multiple AI agents working in concert. This system provides real-time audio transcription, speaker diarization, intelligent meeting analysis, RAG-powered context retrieval, and automated action item extraction.
