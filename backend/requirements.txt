@@ -10,7 +10,7 @@ openai>=1.6.1
 
 # LangChain Ecosystem - Use compatible versions
 langchain>=0.1.0,<0.2.0
-langchain-core>=0.1.0,<0.2.0
+langchain-core>=0.1.0,<1.3.0
 langchain-openai>=0.0.2,<0.1.0
 langchain-community>=0.0.20,<0.1.0
 langgraph>=0.0.40
