@@ -1,66 +1,54 @@
 # FastAPI and Server
-fastapi>=0.109.1  # Security fix for PVE-2024-64930
+fastapi>=0.109.1
 uvicorn[standard]>=0.24.0
-python-multipart>=0.0.7  # Security fix, required by fastapi 0.109.1
-python-socketio>=5.14.0  # Security fix for CVE-2025-61765
-websockets==12.0
+python-multipart>=0.0.7
+python-socketio>=5.14.0
+websockets>=12.0
 
 # AI/ML Core
-openai>=1.6.1  # Required by langchain-openai 0.0.2
-# Note: openai-whisper has compatibility issues with Python 3.14
-# Use faster-whisper as alternative or install whisper separately
-# openai-whisper==20231117
-torch==2.9.1  # Updated to fix CVE-2025-3730 and other security vulnerabilities
-torchaudio==2.9.1  # Updated to match torch version
+openai>=1.6.1
 
-# LangChain Ecosystem - Fixed version compatibility
-langchain==0.1.0
-langchain-core==0.1.45  # Pinned to version compatible with langsmith<0.1.0
-langchain-openai==0.0.2
-langchain-community==0.0.20  # Pinned to version compatible with langsmith<0.1.0
-langgraph==0.0.40
-langsmith>=0.0.77,<0.1.0  # Required by langchain 0.1.0, must be <0.1.0
-
-# Speaker Diarization
-# Note: pyannote.audio may have compatibility issues with Python 3.14
-# Install separately if needed
-# pyannote.audio==3.1.1
-# pyannote.core==5.0.0
+# LangChain Ecosystem - Use compatible versions
+langchain>=0.1.0,<0.2.0
+langchain-core>=0.1.0,<0.2.0
+langchain-openai>=0.0.2,<0.1.0
+langchain-community>=0.0.20,<0.1.0
+langgraph>=0.0.40
+langsmith>=0.0.77
 
 # Vector Database
-qdrant-client==1.11.3  # Updated for Python 3.14 compatibility
-sentence-transformers==2.2.2
+qdrant-client>=1.11.0
+sentence-transformers>=2.2.2
 
 # Database
-sqlalchemy==2.0.23
-psycopg2-binary==2.9.9
-alembic==1.13.0
-asyncpg==0.29.0
+sqlalchemy>=2.0.23
+psycopg2-binary>=2.9.9
+alembic>=1.13.0
+asyncpg>=0.29.0
 
 # Redis
-redis==5.0.1
-aioredis==2.0.1
+redis>=5.0.1
 
 # Audio Processing
-numpy==1.26.2
-scipy==1.11.4
-librosa==0.10.1
-soundfile==0.12.1
-pydub==0.25.1
+numpy>=1.26.0,<2.0.0
+scipy>=1.11.0
+librosa>=0.10.1
+soundfile>=0.12.1
+pydub>=0.25.1
 
 # Utilities
-pydantic==2.5.2
-pydantic-settings==2.1.0
-python-dotenv==1.0.0
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+python-dotenv>=1.0.0
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
 
 # Monitoring & Logging
-prometheus-client==0.19.0
-structlog==23.2.0
+prometheus-client>=0.19.0
+structlog>=23.2.0
 
-# Testing (moved from requirements-dev.txt for easier installation)
-pytest==7.4.3
-pytest-asyncio==0.21.1
-pytest-cov==4.1.0
-httpx==0.25.2
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+httpx>=0.25.0
