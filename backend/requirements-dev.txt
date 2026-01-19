@@ -15,7 +15,7 @@ mypy==1.7.1
 
 # Security
 safety==2.3.5
-bandit==1.7.5
+bandit==1.9.3
 
 # Documentation
 pdoc3==0.10.0
