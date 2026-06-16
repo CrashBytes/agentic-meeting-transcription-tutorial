@@ -1,7 +1,7 @@
 # FastAPI and Server
 fastapi>=0.109.1
 uvicorn[standard]>=0.24.0
-python-multipart>=0.0.7
+python-multipart>=0.0.30
 python-socketio>=5.14.0
 websockets>=12.0
 
