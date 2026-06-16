@@ -9,12 +9,13 @@ websockets>=12.0
 openai>=1.6.1
 
 # LangChain Ecosystem - Use compatible versions
-langchain>=0.1.0,<0.2.0
-langchain-core>=0.1.0,<0.2.0
-langchain-openai>=0.0.2,<0.1.0
-langchain-community>=0.0.20,<0.1.0
-langgraph>=0.0.40
-langsmith>=0.0.77
+langchain>=0.2.5
+langchain-core>=0.3.85
+langchain-openai>=1.1.14
+langchain-community>=0.3.27
+langchain-text-splitters>=1.1.2
+langgraph>=1.0.10
+langsmith>=0.8.0
 
 # Vector Database
 qdrant-client>=1.11.0
