@@ -57,3 +57,6 @@ httpx>=0.25.0
 # Security: pin vulnerable transitive dependencies to fixed versions
 aiohttp>=3.13.4  # CVE-2026-34520
 ecdsa>=0.13.3  # CVE-2019-14859
+nltk>=3.10.0 # not directly required, pinned by Snyk to avoid a vulnerability
+pillow>=12.3.0 # not directly required, pinned by Snyk to avoid a vulnerability
+pyasn1>=0.6.4 # not directly required, pinned by Snyk to avoid a vulnerability
