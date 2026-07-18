@@ -1,9 +1,10 @@
 """Agent package initialization"""
-from .transcription_agent import TranscriptionAgent
-from .diarization_agent import DiarizationAgent
+
+from .action_items_agent import ActionItem, ActionItemsAgent, ActionItemsList
 from .context_retrieval_agent import ContextRetrievalAgent
+from .diarization_agent import DiarizationAgent
 from .summarization_agent import SummarizationAgent
-from .action_items_agent import ActionItemsAgent, ActionItem, ActionItemsList
+from .transcription_agent import TranscriptionAgent
 
 __all__ = [
     "TranscriptionAgent",
@@ -12,5 +13,5 @@ __all__ = [
     "SummarizationAgent",
     "ActionItemsAgent",
     "ActionItem",
-    "ActionItemsList"
+    "ActionItemsList",
 ]

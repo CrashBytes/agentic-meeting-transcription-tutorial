@@ -1,5 +1,6 @@
 """Orchestration package initialization"""
-from .state import MeetingState
+
 from .graph import MeetingWorkflow
+from .state import MeetingState
 
 __all__ = ["MeetingState", "MeetingWorkflow"]

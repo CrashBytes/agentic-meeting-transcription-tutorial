@@ -1,16 +1,22 @@
 """LangGraph workflow orchestration"""
-from langgraph.graph import StateGraph, END
-from typing import Dict, List
+
 import logging
-from .state import MeetingState
+from typing import TYPE_CHECKING, Dict, List
+
+from langgraph.graph import END, StateGraph
+
+if TYPE_CHECKING:
+    from langgraph.graph.state import CompiledStateGraph
+
 from ..services.audio_processor import TranscriptAssembler
+from .state import MeetingState
 
 logger = logging.getLogger(__name__)
 
 
 class MeetingWorkflow:
     """LangGraph workflow for orchestrating meeting processing"""
-    
+
     def __init__(
         self,
         transcription_agent,
@@ -18,11 +24,11 @@ class MeetingWorkflow:
         context_agent,
         summarization_agent,
         action_items_agent,
-        vector_store
+        vector_store,
     ):
         """
         Initialize meeting workflow
-        
+
         Args:
             transcription_agent: TranscriptionAgent instance
             diarization_agent: DiarizationAgent instance
@@ -37,14 +43,14 @@ class MeetingWorkflow:
         self.summarization_agent = summarization_agent
         self.action_items_agent = action_items_agent
         self.vector_store = vector_store
-        
+
         self.workflow = self._build_workflow()
         logger.info("Meeting workflow initialized")
-    
-    def _build_workflow(self) -> StateGraph:
+
+    def _build_workflow(self) -> "CompiledStateGraph":
         """Build LangGraph workflow"""
         workflow = StateGraph(MeetingState)
-        
+
         # Add nodes
         workflow.add_node("transcribe", self._transcribe_node)
         workflow.add_node("diarize", self._diarize_node)
@@ -53,7 +59,7 @@ class MeetingWorkflow:
         workflow.add_node("summarize", self._summarize_node)
         workflow.add_node("extract_actions", self._actions_node)
         workflow.add_node("store_vectors", self._store_node)
-        
+
         # Define edges
         workflow.set_entry_point("transcribe")
         workflow.add_edge("transcribe", "diarize")
@@ -63,46 +69,47 @@ class MeetingWorkflow:
         workflow.add_edge("summarize", "extract_actions")
         workflow.add_edge("extract_actions", "store_vectors")
         workflow.add_edge("store_vectors", END)
-        
+
         return workflow.compile()
-    
+
     async def _transcribe_node(self, state: MeetingState) -> MeetingState:
         """Transcription node"""
         try:
             logger.info(f"Starting transcription for meeting {state.get('meeting_id')}")
-            result = await self.transcription_agent.transcribe_file(
-                state["audio_file"]
-            )
+            result = await self.transcription_agent.transcribe_file(state["audio_file"])
             state["transcript"] = result
             state["status"] = "transcribed"
-            logger.info(f"Transcription complete: {len(result.get('segments', []))} segments")
+            logger.info(
+                f"Transcription complete: {len(result.get('segments', []))} segments"
+            )
         except Exception as e:
             state["error"] = f"Transcription failed: {str(e)}"
             logger.error(state["error"])
         return state
-    
+
     async def _diarize_node(self, state: MeetingState) -> MeetingState:
         """Diarization node"""
         try:
             logger.info(f"Starting diarization for meeting {state.get('meeting_id')}")
-            result = await self.diarization_agent.diarize(
-                state["audio_file"]
-            )
+            result = await self.diarization_agent.diarize(state["audio_file"])
             state["diarization"] = result
             state["status"] = "diarized"
-            logger.info(f"Diarization complete: {result.get('num_speakers', 0)} speakers")
+            logger.info(
+                f"Diarization complete: {result.get('num_speakers', 0)} speakers"
+            )
         except Exception as e:
             state["error"] = f"Diarization failed: {str(e)}"
             logger.error(state["error"])
         return state
-    
+
     async def _merge_node(self, state: MeetingState) -> MeetingState:
         """Merge transcription and diarization"""
         try:
-            logger.info(f"Merging transcript and diarization for meeting {state.get('meeting_id')}")
+            logger.info(
+                f"Merging transcript and diarization for meeting {state.get('meeting_id')}"
+            )
             merged = TranscriptAssembler.merge_transcripts(
-                state["transcript"],
-                state["diarization"]
+                state["transcript"], state["diarization"]
             )
             state["attributed_transcript"] = merged
             state["status"] = "merged"
@@ -111,21 +118,25 @@ class MeetingWorkflow:
             state["error"] = f"Merge failed: {str(e)}"
             logger.error(state["error"])
         return state
-    
+
     async def _context_node(self, state: MeetingState) -> MeetingState:
         """Retrieve context from historical meetings"""
         try:
             logger.info(f"Retrieving context for meeting {state.get('meeting_id')}")
-            
+
             # Generate query from transcript
-            transcript_text = " ".join([
-                seg.get("text", "") 
-                for seg in state["attributed_transcript"][:10]  # Use first 10 segments
-            ])
-            
+            transcript_text = " ".join(
+                [
+                    seg.get("text", "")
+                    for seg in state["attributed_transcript"][
+                        :10
+                    ]  # Use first 10 segments
+                ]
+            )
+
             context = await self.context_agent.retrieve_context(
                 query=transcript_text[:500],  # Limit query length
-                meeting_id_exclude=state.get("meeting_id")
+                meeting_id_exclude=state.get("meeting_id"),
             )
             state["context"] = context
             state["status"] = "context_retrieved"
@@ -135,7 +146,7 @@ class MeetingWorkflow:
             logger.error(state["error"])
             state["context"] = []
         return state
-    
+
     async def _summarize_node(self, state: MeetingState) -> MeetingState:
         """Generate summaries"""
         try:
@@ -143,7 +154,7 @@ class MeetingWorkflow:
             summaries = await self.summarization_agent.summarize(
                 transcript=state["attributed_transcript"],
                 context=state.get("context"),
-                detail_level="all"
+                detail_level="all",
             )
             state["summaries"] = summaries
             state["status"] = "summarized"
@@ -153,11 +164,13 @@ class MeetingWorkflow:
             logger.error(state["error"])
             state["summaries"] = {}
         return state
-    
+
     async def _actions_node(self, state: MeetingState) -> MeetingState:
         """Extract action items"""
         try:
-            logger.info(f"Extracting action items for meeting {state.get('meeting_id')}")
+            logger.info(
+                f"Extracting action items for meeting {state.get('meeting_id')}"
+            )
             action_items = await self.action_items_agent.extract_action_items(
                 state["attributed_transcript"]
             )
@@ -169,7 +182,7 @@ class MeetingWorkflow:
             logger.error(state["error"])
             state["action_items"] = []
         return state
-    
+
     async def _store_node(self, state: MeetingState) -> MeetingState:
         """Store meeting in vector database"""
         try:
@@ -177,7 +190,7 @@ class MeetingWorkflow:
             await self.vector_store.store_meeting(
                 meeting_id=state["meeting_id"],
                 transcript=state["attributed_transcript"],
-                metadata=state.get("metadata", {})
+                metadata=state.get("metadata", {}),
             )
             state["status"] = "complete"
             logger.info(f"Meeting {state.get('meeting_id')} stored successfully")
@@ -185,21 +198,18 @@ class MeetingWorkflow:
             state["error"] = f"Vector storage failed: {str(e)}"
             logger.error(state["error"])
         return state
-    
+
     async def process_meeting(
-        self,
-        meeting_id: str,
-        audio_file: str,
-        metadata: Dict = None
+        self, meeting_id: str, audio_file: str, metadata: Dict = None
     ) -> MeetingState:
         """
         Process meeting through complete workflow
-        
+
         Args:
             meeting_id: Unique meeting identifier
             audio_file: Path to meeting audio file
             metadata: Optional meeting metadata
-            
+
         Returns:
             Final workflow state with all results
         """
@@ -214,11 +224,13 @@ class MeetingWorkflow:
             action_items=[],
             status="pending",
             error=None,
-            metadata=metadata or {}
+            metadata=metadata or {},
         )
-        
+
         logger.info(f"Starting workflow for meeting {meeting_id}")
         final_state = await self.workflow.ainvoke(initial_state)
-        logger.info(f"Workflow complete for meeting {meeting_id}: {final_state['status']}")
-        
+        logger.info(
+            f"Workflow complete for meeting {meeting_id}: {final_state['status']}"
+        )
+
         return final_state

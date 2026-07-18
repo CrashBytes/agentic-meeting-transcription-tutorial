@@ -1,9 +1,11 @@
 """Workflow state management"""
+
 from typing import Dict, List, Optional, TypedDict
 
 
 class MeetingState(TypedDict, total=False):
     """State for meeting processing workflow"""
+
     meeting_id: str
     audio_file: str
     transcript: Dict
