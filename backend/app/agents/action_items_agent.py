@@ -41,7 +41,7 @@ class ActionItemsAgent:
             model_name: OpenAI model name
             temperature: Temperature for generation
         """
-        self.llm = ChatOpenAI(model=model_name, temperature=temperature)
+        self.llm = ChatOpenAI(model_name=model_name, temperature=temperature)
         self.parser = PydanticOutputParser(pydantic_object=ActionItemsList)
         logger.info(f"Action items agent initialized with {model_name}")
 
