@@ -28,7 +28,7 @@ class SummarizationAgent:
             model_name: OpenAI model name
             temperature: Temperature for generation
         """
-        self.llm = ChatOpenAI(model_name=model_name, temperature=temperature)
+        self.llm = ChatOpenAI(model=model_name, temperature=temperature)
         logger.info(f"Summarization agent initialized with {model_name}")
 
     async def summarize(
