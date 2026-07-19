@@ -1,7 +1,7 @@
 """Audio processing utilities"""
 
 import logging
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Dict, List
 
 import numpy as np
 from fastapi import WebSocket
@@ -175,6 +175,3 @@ class TranscriptAssembler:
 
         duration1 = end1 - start1
         return overlap / duration1 if duration1 > 0 else 0
-
-
-from typing import Dict, List
