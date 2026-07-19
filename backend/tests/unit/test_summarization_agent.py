@@ -30,7 +30,7 @@ class TestSummarizationAgent:
             agent = SummarizationAgent(model_name="gpt-4", temperature=0.5)
             mock_llm.assert_called_once()
             call_kwargs = mock_llm.call_args[1]
-            assert call_kwargs["model_name"] == "gpt-4"
+            assert call_kwargs["model"] == "gpt-4"
             assert call_kwargs["temperature"] == 0.5
 
     @pytest.mark.asyncio

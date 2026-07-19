@@ -30,7 +30,7 @@ class TestActionItemsAgent:
         with patch("app.agents.action_items_agent.ChatOpenAI") as mock_llm:
             agent = ActionItemsAgent(model_name="gpt-4", temperature=0.1)
             call_kwargs = mock_llm.call_args[1]
-            assert call_kwargs["model_name"] == "gpt-4"
+            assert call_kwargs["model"] == "gpt-4"
             assert call_kwargs["temperature"] == 0.1
 
     @pytest.mark.asyncio
