@@ -74,13 +74,6 @@ jobs:
         name: codecov-umbrella
         fail_ci_if_error: false
     
-    - name: Generate coverage badge
-      if: github.ref == 'refs/heads/main'
-      uses: cicirello/jacoco-badge-generator@v2
-      with:
-        badges-directory: badges
-        coverage-badge-filename: coverage.svg
-    
     - name: Archive test results
       if: always()
       uses: actions/upload-artifact@v4
