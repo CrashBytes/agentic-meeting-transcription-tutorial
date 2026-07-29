@@ -56,4 +56,3 @@ httpx>=0.25.0
 
 # Security: pin vulnerable transitive dependencies to fixed versions
 aiohttp>=3.13.4  # CVE-2026-34520
-ecdsa>=0.13.3  # CVE-2019-14859
