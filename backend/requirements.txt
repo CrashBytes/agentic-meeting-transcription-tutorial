@@ -56,3 +56,4 @@ httpx>=0.25.0
 
 # Security: pin vulnerable transitive dependencies to fixed versions
 aiohttp>=3.13.4  # CVE-2026-34520
+nltk>=3.9.3 # not directly required, pinned by Snyk to avoid a vulnerability
